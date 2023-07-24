@@ -1,0 +1,68 @@
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
+    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
+    sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+
+  background: url(./images/shutterstock_1310933792.jpg) no-repeat center center
+    fixed;
+  -webkit-background-size: cover;
+  -moz-background-size: cover;
+  -o-background-size: cover;
+  background-size: cover;
+}
+
+button {
+  border: none;
+  outline: none;
+
+  color: black;
+  background-color: transparent;
+
+  cursor: pointer;
+}
+ul {
+  list-style: none;
+  padding: 0 0 0 0;
+  margin: 0 0 0 0;
+}
+a {
+  color: white;
+  text-decoration: none;
+
+  transition: all 1s ease;
+}
+a:hover {
+  font-size: 16.5px;
+
+  transition: all 1s ease;
+}
+
+input,
+textarea {
+  border: 2px solid #8ed25d;
+  border-radius: 10px;
+  padding: 5px 5px;
+  outline: none;
+}
+textarea {
+  width: 900px;
+  height: 100px;
+
+  resize: none;
+}
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+}
+input[type='number'] {
+  -moz-appearance: textfield;
+}
