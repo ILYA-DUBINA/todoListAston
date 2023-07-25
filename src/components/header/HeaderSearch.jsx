@@ -7,6 +7,7 @@ class HeaderSearch extends Component {
     super(props);
     this.state = {
       value: '',
+      valueError: false,
       valueArea: '',
       openDescriptionValue: false,
       openTimerValue: false,
@@ -38,30 +39,37 @@ class HeaderSearch extends Component {
   }
   getValueInputs(e) {
     e.preventDefault();
-    this.props.createArrayElements({
-      title: this.state.value,
-      description: this.state.valueArea,
-      years: this.state.years__number,
-      months: this.state.months__number,
-      days: this.state.days__number,
-      hours: this.state.hours__number,
-      minutes: this.state.minutes__number,
-      seconds: this.state.seconds__number,
-    });
-    this.setState({
-      value: '',
-      valueArea: '',
-      openDescriptionValue: false,
-      openTimerValue: false,
-      years__number: 0,
-      months__number: 0,
-      weeks__number: 0,
-      days__number: 0,
-      hours__number: 0,
-      minutes__number: 0,
-      seconds__number: 0,
-      height: false,
-    });
+    if (this.state.value.length < 2) {
+      this.setState({
+        valueError: true,
+      });
+    } else {
+      this.props.createArrayElements({
+        title: this.state.value,
+        description: this.state.valueArea,
+        years: this.state.years__number,
+        months: this.state.months__number,
+        days: this.state.days__number,
+        hours: this.state.hours__number,
+        minutes: this.state.minutes__number,
+        seconds: this.state.seconds__number,
+      });
+      this.setState({
+        value: '',
+        valueArea: '',
+        openDescriptionValue: false,
+        openTimerValue: false,
+        years__number: 0,
+        months__number: 0,
+        weeks__number: 0,
+        days__number: 0,
+        hours__number: 0,
+        minutes__number: 0,
+        seconds__number: 0,
+        height: false,
+        valueError: false,
+      });
+    }
   }
 
   openDescription(e) {
@@ -106,24 +114,37 @@ class HeaderSearch extends Component {
       minutes__number,
       seconds__number,
       height,
+      valueError,
     } = this.state;
     return (
       <header className={style.header}>
-        <div className="header__title">
-          <h2 className="header__title-name">
+        <div className={style.header__title}>
+          <h2 className={style.header__title_name}>
             Новый колонист, Добро пожаловать на планету &ldquo;Райская
             земля&ldquo;! <br /> Для комфортного проживания на данной планете мы
             рекомендуем продумать ваши задачи, если их нет в списке текущих
             задач.
           </h2>
           <div className={style.header__title_search}>
-            <h3 className="search__title">Название задачи</h3>
+            <h3 className={style.search__title}>
+              Название задачи или поиск по названию
+            </h3>
             <input
-              className={style.search__input}
+              className={
+                valueError
+                  ? style.search__input + ' ' + style.search__input_error
+                  : style.search__input
+              }
               type="text"
               value={value}
               onChange={getTitle}
             ></input>
+            {valueError && (
+              <p className={style.search__error}>
+                Данные введены не корректно! Название должно быть и состоять не
+                менее чем из 2 символов.
+              </p>
+            )}
           </div>
         </div>
         <div className={style.header__content}>

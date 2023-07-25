@@ -30,7 +30,7 @@ export default class App extends Component {
           seconds: 0,
         }),
         getOneItemElement({
-          title: 'Выбор профессии',
+          title: 'Выбор профессии и/или переквалификация',
           description: generateWords(15),
           years: 0,
           months: 0,
@@ -104,30 +104,37 @@ export default class App extends Component {
         ...obj,
         archive: !obj.archive,
       };
+
       let newArr = [
         ...arrayElements.slice(0, indexElement),
         newObj,
-        ...arrayElements.slice(indexElement + 1, indexElement.length - 1),
+        ...arrayElements.slice(indexElement + 1, arrayElements.length),
       ];
+      console.log(newArr, indexElement);
       return {
         arrayElements: newArr,
       };
     });
   }
-  // componentDidMount() {
-  //   this.setState({
-  //     time: calculateTimeLeft(),
-  //   });
-  // }
-  // componentDidUpdate() {
-  //   this.id = setTimeout(() => {
-  //     this.setState({
-  //       time: calculateTimeLeft(),
-  //     });
-  //   }, 1000);
-  // }
+  componentDidMount() {
+    let arrayStorage = JSON.parse(localStorage.getItem('arr'));
+
+    this.setState({
+      arrayElements:
+        arrayStorage.length === 0 ? this.state.arrayElements : arrayStorage,
+    });
+  }
+  componentDidUpdate() {
+    localStorage.setItem('arr', JSON.stringify(this.state.arrayElements));
+    // this.id = setTimeout(() => {
+    //   this.setState({
+    //     time: calculateTimeLeft(),
+    //   });
+    // }, 1000);
+  }
   // componentWillUnmount() {
-  //   clearTimeout(this.id);
+  // localStorage.setItem('arr', JSON.stringify(this.state.arrayElements));
+  // clearTimeout(this.id);
   // }
 
   render() {

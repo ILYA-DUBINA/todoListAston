@@ -272,3 +272,10 @@
 .height__create {
   height: 45px;
 }
+.search__error {
+  font-weight: 600;
+  color: red;
+}
+.search__input_error {
+  border: 2px solid red;
+}
