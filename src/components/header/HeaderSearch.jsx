@@ -1,5 +1,7 @@
 import { Component } from 'react';
 
+import { debounce } from '../function';
+
 import style from './HeaderSearch.module.css';
 
 class HeaderSearch extends Component {
@@ -25,6 +27,7 @@ class HeaderSearch extends Component {
     this.openDescription = this.openDescription.bind(this);
     this.openTimer = this.openTimer.bind(this);
     this.setTimeTask = this.setTimeTask.bind(this);
+    this.valueDebounce = debounce(this.props.changeValueWord, 500);
   }
 
   getTitle(e) {
@@ -101,6 +104,7 @@ class HeaderSearch extends Component {
       openDescription,
       openTimer,
       setTimeTask,
+      valueDebounce,
     } = this;
     let {
       value,
@@ -116,7 +120,6 @@ class HeaderSearch extends Component {
       height,
       valueError,
     } = this.state;
-    let { changeValueWord } = this.props;
     console.log(this.props);
     return (
       <header className={style.header}>
@@ -141,7 +144,7 @@ class HeaderSearch extends Component {
               value={value}
               onChange={(e) => {
                 getTitle(e);
-                changeValueWord(e);
+                valueDebounce(e);
               }}
             ></input>
             {valueError && (
