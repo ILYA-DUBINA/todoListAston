@@ -116,6 +116,8 @@ class HeaderSearch extends Component {
       height,
       valueError,
     } = this.state;
+    let { changeValueWord } = this.props;
+    console.log(this.props);
     return (
       <header className={style.header}>
         <div className={style.header__title}>
@@ -137,7 +139,10 @@ class HeaderSearch extends Component {
               }
               type="text"
               value={value}
-              onChange={getTitle}
+              onChange={(e) => {
+                getTitle(e);
+                changeValueWord(e);
+              }}
             ></input>
             {valueError && (
               <p className={style.search__error}>

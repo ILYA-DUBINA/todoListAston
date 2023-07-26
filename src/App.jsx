@@ -50,13 +50,23 @@ export default class App extends Component {
           seconds: 0,
         }),
       ],
+      storageUnplag: false,
+      name: '',
+      word: '',
+      // filter: null,
       // time: calculateTimeLeft(),
     };
     // this.id;
     this.createArrayElements = this.createArrayElements.bind(this);
     this.editedItemElement = this.editedItemElement.bind(this);
     this.deleteItemElement = this.deleteItemElement.bind(this);
-    this.addArchiveItemElement = this.addArchiveItemElement.bind(this);
+    this.addNameFilter = this.addNameFilter.bind(this);
+    this.searchByTitle = this.searchByTitle.bind(this);
+    this.changeValueWord = this.changeValueWord.bind(this);
+    this.showActiveCompletedArchiveElements =
+      this.showActiveCompletedArchiveElements.bind(this);
+    this.addArchiveItemElementAndMarkAsCompletedItemElement =
+      this.addArchiveItemElementAndMarkAsCompletedItemElement.bind(this);
   }
   createArrayElements(objValue) {
     let obj = getOneItemElement(objValue);
@@ -96,29 +106,66 @@ export default class App extends Component {
       };
     });
   }
-  addArchiveItemElement(id) {
+  addArchiveItemElementAndMarkAsCompletedItemElement(id, text) {
     this.setState(({ arrayElements }) => {
       let indexElement = arrayElements.findIndex((item) => item.id === id);
       let obj = arrayElements[indexElement];
       let newObj = {
         ...obj,
-        archive: !obj.archive,
+        [text]: !obj[text],
       };
-
+      console.log(newObj, text, !obj[text]);
       let newArr = [
         ...arrayElements.slice(0, indexElement),
         newObj,
         ...arrayElements.slice(indexElement + 1, arrayElements.length),
       ];
       console.log(newArr, indexElement);
+
       return {
         arrayElements: newArr,
       };
     });
   }
+  addNameFilter(name) {
+    this.setState({
+      name,
+    });
+  }
+  showActiveCompletedArchiveElements(text, arr) {
+    let newArr = arr.filter((item) =>
+      text === 'active' ? !item['archive'] && !item['completed'] : item[text],
+    );
+
+    return !text ? arr : newArr;
+  }
+  changeValueWord(text) {
+    this.setState({
+      word: text.target.value,
+    });
+  }
+  searchByTitle(arr, text) {
+    if (!text) {
+      return arr;
+    }
+
+    return arr.filter((item) => {
+      return item.title.toLowerCase().indexOf(text.toLowerCase()) > -1;
+    });
+  }
+  // filter(items, filter) {
+  //   if (filter === undefined) {
+  //     return items.filter((item) => !item.completed);
+  //   }
+  //   if (filter === 'completed') {
+  //     return items.filter((item) => item.completed);
+  //   }
+  //   return items;
+  // }
+
   componentDidMount() {
     let arrayStorage = JSON.parse(localStorage.getItem('arr'));
-
+    console.log('mount');
     this.setState({
       arrayElements:
         arrayStorage.length === 0 ? this.state.arrayElements : arrayStorage,
@@ -126,27 +173,29 @@ export default class App extends Component {
   }
   componentDidUpdate() {
     localStorage.setItem('arr', JSON.stringify(this.state.arrayElements));
-    // this.id = setTimeout(() => {
-    //   this.setState({
-    //     time: calculateTimeLeft(),
-    //   });
-    // }, 1000);
+    console.log('update');
   }
-  // componentWillUnmount() {
-  // localStorage.setItem('arr', JSON.stringify(this.state.arrayElements));
-  // clearTimeout(this.id);
-  // }
 
   render() {
     // console.log(this.state.arrayElements);
-    let { arrayElements } = this.state;
+    let { arrayElements, name, word } = this.state;
     let {
       createArrayElements,
       editedItemElement,
       deleteItemElement,
-      addArchiveItemElement,
+      showActiveCompletedArchiveElements,
+      addArchiveItemElementAndMarkAsCompletedItemElement,
+      addNameFilter,
+      searchByTitle,
+      changeValueWord,
     } = this;
 
+    const allSearchArrayElements = searchByTitle(arrayElements, word);
+    const allArrayElements = showActiveCompletedArchiveElements(
+      name,
+      allSearchArrayElements,
+    );
+    console.log(allArrayElements, allSearchArrayElements);
     // const timerComponents = Object.keys(time).map((interval) => {
     //   if (!time[interval]) {
     //     return;
@@ -161,13 +210,18 @@ export default class App extends Component {
     // console.log(this.id, time, timerComponents);
     return (
       <div className={style.App}>
-        <HeaderSearch createArrayElements={createArrayElements} />
+        <HeaderSearch
+          createArrayElements={createArrayElements}
+          changeValueWord={changeValueWord}
+        />
         {/* <MyContext.Provider value={editedItemElement}> */}
         <SectionItems
-          arrayElements={arrayElements}
+          arrayElements={allArrayElements}
           editedItemElement={editedItemElement}
           deleteItemElement={deleteItemElement}
-          addArchiveItemElement={addArchiveItemElement}
+          addArchiveItemElementAndMarkAsCompletedItemElement={
+            addArchiveItemElementAndMarkAsCompletedItemElement
+          }
         />
         {/* {timerComponents} */}
         {/* <div className={style.timer}>
@@ -179,7 +233,7 @@ export default class App extends Component {
           </div>
         </div> */}
         {/* </MyContext.Provider> */}
-        <Footer />
+        <Footer addNameFilter={addNameFilter} />
       </div>
     );
   }

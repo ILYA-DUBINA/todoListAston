@@ -12,7 +12,7 @@ export default class SectionItems extends Component {
       arrayElements,
       editedItemElement,
       deleteItemElement,
-      addArchiveItemElement,
+      addArchiveItemElementAndMarkAsCompletedItemElement,
     } = this.props;
     return (
       <section className={style.section__items}>
@@ -21,7 +21,9 @@ export default class SectionItems extends Component {
             arrayElements={arrayElements}
             editedItemElement={editedItemElement}
             deleteItemElement={deleteItemElement}
-            addArchiveItemElement={addArchiveItemElement}
+            addArchiveItemElementAndMarkAsCompletedItemElement={
+              addArchiveItemElementAndMarkAsCompletedItemElement
+            }
           />
         </ul>
       </section>

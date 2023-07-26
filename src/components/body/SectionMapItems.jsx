@@ -11,7 +11,7 @@ class SectionMapItems extends Component {
       arrayElements,
       editedItemElement,
       deleteItemElement,
-      addArchiveItemElement,
+      addArchiveItemElementAndMarkAsCompletedItemElement,
     } = this.props;
     return (
       <React.Fragment>
@@ -21,7 +21,9 @@ class SectionMapItems extends Component {
               obj={item}
               editedItemElement={editedItemElement}
               deleteItemElement={deleteItemElement}
-              addArchiveItemElement={addArchiveItemElement}
+              addArchiveItemElementAndMarkAsCompletedItemElement={
+                addArchiveItemElementAndMarkAsCompletedItemElement
+              }
             />
           </React.Fragment>
         ))}

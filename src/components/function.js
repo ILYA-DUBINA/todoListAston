@@ -31,7 +31,7 @@ function getRandomNumber(min, max) {
 }
 function getArrayDate(seconds) {
   let secondsToday = Math.floor(new Date().getTime() / 1000);
-  var t = new Date(Date.UTC(1970, 0, 1));
+  let t = new Date(Date.UTC(1970, 0, 1));
   t.setUTCSeconds(seconds + secondsToday);
   return [
     t.getFullYear(),
@@ -52,6 +52,7 @@ function getSecondsDate(years, months, days, hours, minutes, seconds) {
     seconds
   );
 }
+
 export function generateWords(length = 10) {
   return (
     [...Array(length)]
@@ -60,7 +61,6 @@ export function generateWords(length = 10) {
       .trim() + '.'
   );
 }
-
 export function getOneItemElement({
   title,
   description,
@@ -80,6 +80,7 @@ export function getOneItemElement({
     description: description,
     time: resultArrayDate,
     archive: false,
+    completed: false,
   };
 }
 

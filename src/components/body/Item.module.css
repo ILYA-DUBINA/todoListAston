@@ -139,3 +139,30 @@
 .redTimer {
   color: red;
 }
+.content__completed_image {
+}
+.content__completed_text {
+  display: flex;
+  align-items: center;
+}
+.content__completed_buttons {
+  margin: -30px 0 0 0;
+  padding: 0 0 40px 0;
+}
+.content__completed_buttons button {
+  font-size: 16px;
+  font-weight: 600;
+
+  margin: 0 20px 0 0;
+
+  opacity: 0.4;
+  transition: all 1s ease-in;
+}
+.content__completed_buttons button:first-child:hover {
+  transform: rotate(-5deg);
+  transition: all 1s ease;
+}
+.content__completed_buttons button:last-child:hover {
+  transform: scale(1.05);
+  transition: all 1s ease;
+}

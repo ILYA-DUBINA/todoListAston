@@ -14,8 +14,8 @@ export default class Item extends Component {
       value: this.props.obj.title,
       valueArea: this.props.obj.description,
       open: false,
-      timer: calculateTimeLeft(this.props.obj.time),
-      idTimer: 0,
+      timer: {},
+      count: 0,
     };
     // this.MyContext = MyContext;
     this.id;
@@ -31,7 +31,6 @@ export default class Item extends Component {
   openItemText() {
     this.setState({
       open: true,
-      idTimer: this.id,
     });
   }
 
@@ -48,17 +47,29 @@ export default class Item extends Component {
       this.setState({
         open: false,
       });
-
-      // this.id = this.state.idTimer;
     }
   }
   deleteItem() {
     this.props.deleteItemElement(this.props.obj.id);
   }
   setArchiveItem() {
-    this.props.addArchiveItemElement(this.props.obj.id);
+    this.props.addArchiveItemElementAndMarkAsCompletedItemElement(
+      this.props.obj.id,
+      'archive',
+    );
+    // this.id = setTimeout(() => {
+    //   let count = 0;
+    //   this.setState({
+    //     count: count++,
+    //   });
+    // }, 1000);
   }
-  setCompletedItem() {}
+  setCompletedItem() {
+    this.props.addArchiveItemElementAndMarkAsCompletedItemElement(
+      this.props.obj.id,
+      'completed',
+    );
+  }
 
   getTitle(e) {
     this.setState({
@@ -73,36 +84,26 @@ export default class Item extends Component {
 
   componentDidMount() {
     this.setState({
-      timer: calculateTimeLeft(this.props.obj.time),
+      timer:
+        calculateTimeLeft(this.state.timer) &&
+        calculateTimeLeft(this.props.obj.time),
     });
   }
   componentDidUpdate() {
-    // this.id = this.state.idTimer && this.id;
+    let count = 0;
     if (Object.keys(this.state.timer).length) {
       this.id = setTimeout(() => {
-        // if (!this.state.open) {
         this.setState({
           timer: calculateTimeLeft(this.props.obj.time),
+          count: count++,
         });
-        // }
+        count++;
       }, 1000);
-      // console.log(
-      //   this.id,
-      //   this.state.timer,
-      //   this.state.idTimer,
-      //   this.props.obj.time,
-      // );
-      // this.state.open && clearTimeout(this.id);
+      this.props.obj.archive && clearTimeout(this.id);
+      // console.log(this.id, this.state.count, count);
     }
-    // this.state.open && clearInterval(this.id);
-    // console.log(this.id, Object.keys(this.state.timer).length);
   }
   componentWillUnmount() {
-    // this.state.open &&
-    //   (clearTimeout(this.id),
-    //   this.setState({
-    //     idTimer: this.id,
-    //   }));
     clearTimeout(this.id);
   }
 
@@ -125,7 +126,7 @@ export default class Item extends Component {
   render() {
     // let v = this.context;
 
-    let { title, description, archive } = this.props.obj;
+    let { title, description, archive, completed } = this.props.obj;
     let { open, value, valueArea, timer } = this.state;
     let {
       openItemText,
@@ -148,126 +149,163 @@ export default class Item extends Component {
         </span>
       );
     });
-    // console.log(redTimer);
+    // console.log(time, timer, timerComponents);
     return (
       <li className={style.content}>
-        <div
-          className={
-            archive
-              ? style.content__timer + ' ' + style.redTimer
-              : style.content__timer
-          }
-        >
-          {timerComponents.length ? (
-            <>
-              <h3 className={style.content__timer_title}>
-                До конца выполнения текущей задачи осталось:
-              </h3>
-              <span className={style.content__timer_number}>
-                {timerComponents}
-              </span>
-            </>
-          ) : null}
-        </div>
-        <div
-          className={
-            timerComponents.length && !open && !archive
-              ? style.content__item + ' ' + style.fire
-              : style.content__item
-          }
-        >
-          {!open ? (
-            <h2 className={style.content__item_title}>{title}</h2>
-          ) : (
-            <textarea
-              className={style.header__title_search}
-              type="text"
-              value={value}
-              onChange={getTitle}
-              placeholder="название задачи"
-            ></textarea>
-          )}
-          {!open ? (
-            <p className={style.content__item_text}>{description}</p>
-          ) : (
-            <textarea
-              className={style.header__discription_text}
-              type="text"
-              value={valueArea}
-              onChange={getDiscription}
-              placeholder="описание задачи"
-            ></textarea>
-          )}
-          {!open ? (
-            <div className={style.content__item_buttons}>
-              <button
-                className={style.content__item_edited}
-                onClick={openItemText}
+        {completed ? (
+          <div className={style.content__completed}>
+            <div className={style.content__completed_text}>
+              <svg
+                width="163px"
+                height="163px"
+                viewBox="-102.4 -102.4 1228.80 1228.80"
+                className={style.text__image}
+                version="1.1"
+                xmlns="http://www.w3.org/2000/svg"
+                fill="#000000"
+                stroke="#000000"
+                strokeWidth="0.01024"
+                transform="matrix(1, 0, 0, 1, 0, 0)rotate(0)"
               >
-                редактировать
-              </button>
+                <g id="SVGRepo_bgCarrier" strokeWidth="0" />
+
+                <g
+                  id="SVGRepo_tracerCarrier"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                />
+
+                <g id="SVGRepo_iconCarrier">
+                  <path
+                    d="M866.133333 258.133333L362.666667 761.6l-204.8-204.8L98.133333 618.666667 362.666667 881.066667l563.2-563.2z"
+                    fill="#43A047"
+                  />
+                </g>
+              </svg>
+              <h2 className={style.text__title}>
+                Поздравляю! Задача &ldquo;{title}&ldquo; выполнена успешно.
+              </h2>
+            </div>
+            <div className={style.content__completed_buttons}>
               <button
-                className={style.content__item_delete}
-                onClick={deleteItem}
-              >
-                удалить
-              </button>
-              <button
-                className={style.content__item_archive}
-                onClick={setArchiveItem}
-              >
-                приостановить задачу
-              </button>
-              <button
-                className={style.content__item_completed}
+                className={style.buttons__resume}
                 onClick={setCompletedItem}
               >
-                отметить как выполненную
+                Возобновить задачу
               </button>
-              <button className={style.content__item_time}>
-                поставить срок выполнения
-              </button>
-            </div>
-          ) : (
-            <button className={style.content__save} onClick={saveItemText}>
-              Сохранить изменения
-            </button>
-          )}
-          {archive ? (
-            <div className={style.content__item_block}>
-              <svg
-                className={style.block__svg}
-                xmlns="http://www.w3.org/2000/svg"
-                style={{ stroke: 'rgba(255, 0, 0, 0.9)', strokeWidth: 10 }}
-              >
-                <line x1="0" y1="0" x2="100%" y2="100%" />
-                <line x1="0" y1="100%" x2="100%" y2="0" />
-              </svg>
-              <h2 className={style.block__title}>Задача добавлена в архив</h2>
-              <button className={style.block__active} onClick={setArchiveItem}>
-                Возобновить задачу?!
+              <button className={style.buttons__delete} onClick={deleteItem}>
+                Удалить задачу
               </button>
             </div>
-          ) : null}
-          {archive ? (
-            <div className={style.content__item_block}>
-              {/* <svg
-                className={style.block__svg}
-                xmlns="http://www.w3.org/2000/svg"
-                style={{ stroke: 'rgba(255, 0, 0, 0.9)', strokeWidth: 10 }}
-              >
-                <line x1="0" y1="0" x2="100%" y2="100%" />
-                <line x1="0" y1="100%" x2="100%" y2="0" />
-              </svg> */}
-              <h2 className={style.block__title}>
-                Поздравляю! Задача {title} выполнена.
-              </h2>
-              <button className={style.block__active}>
-                Возобновить задачу?!
-              </button>
+          </div>
+        ) : (
+          <>
+            <div
+              className={
+                archive
+                  ? style.content__timer + ' ' + style.redTimer
+                  : style.content__timer
+              }
+            >
+              {timerComponents.length ? (
+                <>
+                  <h3 className={style.content__timer_title}>
+                    До конца выполнения текущей задачи осталось:
+                  </h3>
+                  <span className={style.content__timer_number}>
+                    {timerComponents}
+                  </span>
+                </>
+              ) : null}
             </div>
-          ) : null}
-        </div>
+            <div
+              className={
+                timerComponents.length && !open && !archive
+                  ? style.content__item + ' ' + style.fire
+                  : style.content__item
+              }
+            >
+              {!open ? (
+                <h2 className={style.content__item_title}>{title}</h2>
+              ) : (
+                <textarea
+                  className={style.header__title_search}
+                  type="text"
+                  value={value}
+                  onChange={getTitle}
+                  placeholder="название задачи"
+                ></textarea>
+              )}
+              {!open ? (
+                <p className={style.content__item_text}>{description}</p>
+              ) : (
+                <textarea
+                  className={style.header__discription_text}
+                  type="text"
+                  value={valueArea}
+                  onChange={getDiscription}
+                  placeholder="описание задачи"
+                ></textarea>
+              )}
+              {!open ? (
+                <div className={style.content__item_buttons}>
+                  <button
+                    className={style.content__item_edited}
+                    onClick={openItemText}
+                  >
+                    редактировать
+                  </button>
+                  <button
+                    className={style.content__item_delete}
+                    onClick={deleteItem}
+                  >
+                    удалить
+                  </button>
+                  <button
+                    className={style.content__item_archive}
+                    onClick={setArchiveItem}
+                  >
+                    приостановить задачу
+                  </button>
+                  <button
+                    className={style.content__item_completed}
+                    onClick={setCompletedItem}
+                  >
+                    отметить как выполненную
+                  </button>
+                  <button className={style.content__item_time}>
+                    поставить срок выполнения
+                  </button>
+                </div>
+              ) : (
+                <button className={style.content__save} onClick={saveItemText}>
+                  Сохранить изменения
+                </button>
+              )}
+              {archive ? (
+                <div className={style.content__item_block}>
+                  <svg
+                    className={style.block__svg}
+                    xmlns="http://www.w3.org/2000/svg"
+                    style={{ stroke: 'rgba(255, 0, 0, 0.9)', strokeWidth: 10 }}
+                  >
+                    <line x1="0" y1="0" x2="100%" y2="100%" />
+                    <line x1="0" y1="100%" x2="100%" y2="0" />
+                  </svg>
+                  <h2 className={style.block__title}>
+                    Задача добавлена в архив
+                  </h2>
+                  <button
+                    className={style.block__active}
+                    onClick={setArchiveItem}
+                  >
+                    Возобновить задачу
+                  </button>
+                </div>
+              ) : null}
+            </div>
+          </>
+        )}
       </li>
     );
   }
