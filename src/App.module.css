@@ -14,7 +14,16 @@
   box-shadow: 6px -3px 54px -9px rgba(255, 255, 255, 0.9);
   background: rgba(255, 255, 255, 0.6);
 }
+.App__image {
+  width: 100vw;
+  height: 100vh;
 
+  position: fixed;
+  top: 50%;
+  left: 50%;
+
+  transform: translate(-62%, -50%);
+}
 .App-logo {
   height: 40vmin;
   pointer-events: none;

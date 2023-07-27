@@ -1,0 +1,38 @@
+.context {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+
+  position: fixed;
+  top: 30%;
+  left: 40px;
+}
+.context__button {
+  position: relative;
+}
+.context__button_change {
+  position: relative;
+
+  font-weight: 600;
+
+  padding: 30px;
+  margin: 0 0 20px 0;
+  color: white;
+  transition: all 5s ease;
+  z-index: 10;
+}
+.context__button_change:hover {
+  transform: scaleX(-1);
+  transition: all 5s ease;
+}
+.context__button_image {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+
+  transform: translate(-50%, -60%);
+}
+
+.red {
+  color: red;
+}

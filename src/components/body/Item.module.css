@@ -166,3 +166,8 @@
   transform: scale(1.05);
   transition: all 1s ease;
 }
+
+.red,
+.red button {
+  color: red;
+}

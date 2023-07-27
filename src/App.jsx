@@ -10,8 +10,14 @@ import {
   // calculateTimeLeft,
 } from './components/function';
 import Footer from './components/footer/Footer';
+import ContextComponent from './components/body/ContextComponent';
+import background from './images/background.jpg';
+import backgroundHell from './images/backgroundHell.jpg';
 
-// export const MyContext = React.createContext(function f() {});
+export let ContextValue = React.createContext({
+  theme: '',
+  toggleTheme: () => {},
+});
 
 export default class App extends Component {
   constructor(props) {
@@ -53,6 +59,7 @@ export default class App extends Component {
       storageUnplag: false,
       name: '',
       word: '',
+      theme: '',
       // filter: null,
       // time: calculateTimeLeft(),
     };
@@ -63,6 +70,7 @@ export default class App extends Component {
     this.addNameFilter = this.addNameFilter.bind(this);
     this.searchByTitle = this.searchByTitle.bind(this);
     this.changeValueWord = this.changeValueWord.bind(this);
+    this.changeThemeAllContent = this.changeThemeAllContent.bind(this);
     this.showActiveCompletedArchiveElements =
       this.showActiveCompletedArchiveElements.bind(this);
     this.addArchiveItemElementAndMarkAsCompletedItemElement =
@@ -153,19 +161,14 @@ export default class App extends Component {
       return item.title.toLowerCase().indexOf(text.toLowerCase()) > -1;
     });
   }
-  // filter(items, filter) {
-  //   if (filter === undefined) {
-  //     return items.filter((item) => !item.completed);
-  //   }
-  //   if (filter === 'completed') {
-  //     return items.filter((item) => item.completed);
-  //   }
-  //   return items;
-  // }
-
+  changeThemeAllContent() {
+    this.setState(({ theme }) => {
+      return { theme: theme === 'red' ? '' : 'red' };
+    });
+  }
   componentDidMount() {
     let arrayStorage = JSON.parse(localStorage.getItem('arr'));
-    console.log('mount');
+    // console.log('mount');
     this.setState({
       arrayElements:
         arrayStorage.length === 0 ? this.state.arrayElements : arrayStorage,
@@ -173,12 +176,12 @@ export default class App extends Component {
   }
   componentDidUpdate() {
     localStorage.setItem('arr', JSON.stringify(this.state.arrayElements));
-    console.log('update');
+    // console.log('update');
   }
 
   render() {
     // console.log(this.state.arrayElements);
-    let { arrayElements, name, word } = this.state;
+    let { arrayElements, name, word, theme } = this.state;
     let {
       createArrayElements,
       editedItemElement,
@@ -188,6 +191,7 @@ export default class App extends Component {
       addNameFilter,
       searchByTitle,
       changeValueWord,
+      changeThemeAllContent,
     } = this;
 
     const allSearchArrayElements = searchByTitle(arrayElements, word);
@@ -195,7 +199,7 @@ export default class App extends Component {
       name,
       allSearchArrayElements,
     );
-    console.log(allArrayElements, allSearchArrayElements);
+    // console.log(allArrayElements, allSearchArrayElements);
     // const timerComponents = Object.keys(time).map((interval) => {
     //   if (!time[interval]) {
     //     return;
@@ -208,23 +212,38 @@ export default class App extends Component {
     //   );
     // });
     // console.log(this.id, time, timerComponents);
+    console.log(theme);
     return (
-      <div className={style.App}>
-        <HeaderSearch
-          createArrayElements={createArrayElements}
-          changeValueWord={changeValueWord}
-        />
-        {/* <MyContext.Provider value={editedItemElement}> */}
-        <SectionItems
-          arrayElements={allArrayElements}
-          editedItemElement={editedItemElement}
-          deleteItemElement={deleteItemElement}
-          addArchiveItemElementAndMarkAsCompletedItemElement={
-            addArchiveItemElementAndMarkAsCompletedItemElement
-          }
-        />
-        {/* {timerComponents} */}
-        {/* <div className={style.timer}>
+      <ContextValue.Provider
+        value={{
+          theme: theme,
+          toggleTheme: changeThemeAllContent,
+        }}
+      >
+        <>
+          <div className={style.App__image}>
+            <img
+              className={style.App__image_img}
+              src={theme ? backgroundHell : background}
+              alt="картинка фона"
+            />
+          </div>
+          <div className={style.App}>
+            <HeaderSearch
+              createArrayElements={createArrayElements}
+              changeValueWord={changeValueWord}
+            />
+            <ContextComponent />
+            <SectionItems
+              arrayElements={allArrayElements}
+              editedItemElement={editedItemElement}
+              deleteItemElement={deleteItemElement}
+              addArchiveItemElementAndMarkAsCompletedItemElement={
+                addArchiveItemElementAndMarkAsCompletedItemElement
+              }
+            />
+            {/* {timerComponents} */}
+            {/* <div className={style.timer}>
           <div className={style.timer__items}>
             <div className={(style.timer__item, style.timer__days)}>00</div>
             <div className={(style.timer__item, style.timer__hours)}>00</div>
@@ -232,9 +251,11 @@ export default class App extends Component {
             <div className={(style.timer__item, style.timer__seconds)}>00</div>
           </div>
         </div> */}
-        {/* </MyContext.Provider> */}
-        <Footer addNameFilter={addNameFilter} />
-      </div>
+
+            <Footer addNameFilter={addNameFilter} />
+          </div>
+        </>
+      </ContextValue.Provider>
     );
   }
 }
