@@ -11,12 +11,6 @@ body {
     sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-
-  /* background: url(./images/background.jpg) no-repeat center center fixed;
-  -webkit-background-size: cover;
-  -moz-background-size: cover;
-  -o-background-size: cover;
-  background-size: cover; */
 }
 
 button {
@@ -30,12 +24,14 @@ button {
 }
 ul {
   list-style: none;
+
   padding: 0 0 0 0;
   margin: 0 0 0 0;
 }
 a {
-  color: white;
   text-decoration: none;
+
+  color: white;
 
   transition: all 1s ease;
 }
@@ -61,7 +57,4 @@ textarea {
 input::-webkit-outer-spin-button,
 input::-webkit-inner-spin-button {
   -webkit-appearance: none;
-}
-input[type='number'] {
-  -moz-appearance: textfield;
 }

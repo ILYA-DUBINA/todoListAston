@@ -5,7 +5,7 @@ import { ContextValue } from '../../App';
 
 import style from './HeaderSearch.module.css';
 
-class HeaderSearch extends Component {
+export default class HeaderSearch extends Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -30,7 +30,6 @@ class HeaderSearch extends Component {
     this.setTimeTask = this.setTimeTask.bind(this);
     this.valueDebounce = debounce(this.props.changeValueWord, 500);
   }
-
   getTitle(e) {
     this.setState({
       value: e.target.value,
@@ -73,9 +72,9 @@ class HeaderSearch extends Component {
         height: false,
         valueError: false,
       });
+      this.valueDebounce('');
     }
   }
-
   openDescription(e) {
     e.preventDefault();
     this.setState({
@@ -90,13 +89,11 @@ class HeaderSearch extends Component {
       height: true,
     });
   }
-
   setTimeTask(e) {
     this.setState({
       [e.target.className]: e.target.value,
     });
   }
-
   render() {
     let {
       getDiscription,
@@ -121,183 +118,177 @@ class HeaderSearch extends Component {
       height,
       valueError,
     } = this.state;
-    // console.log(this.props);
     return (
       <ContextValue.Consumer>
         {({ theme }) => (
-          console.log(theme),
-          (
-            <header
-              className={theme ? style.header + ' ' + style.red : style.header}
-            >
-              <div className={style.header__title}>
-                <h2 className={style.header__title_name}>
-                  Новый колонист, Добро пожаловать на планету &ldquo;
-                  {theme ? 'Адская земля' : 'Райская земля'}&ldquo;! <br /> Для
-                  {theme
-                    ? ' "комфортного проживания" '
-                    : ' комфортного проживания '}
-                  на данной планете мы рекомендуем продумать ваши задачи, если
-                  их нет в списке текущих задач.
-                </h2>
-                <div className={style.header__title_search}>
-                  <h3 className={style.search__title}>
-                    Название задачи или поиск по названию
-                  </h3>
-                  <input
-                    className={
-                      valueError
-                        ? style.search__input + ' ' + style.search__input_error
-                        : style.search__input
-                    }
-                    type="text"
-                    value={value}
-                    onChange={(e) => {
-                      getTitle(e);
-                      valueDebounce(e);
-                    }}
-                  ></input>
-                  {valueError && (
-                    <p className={style.search__error}>
-                      Данные введены не корректно! Название должно быть и
-                      состоять не менее чем из 2 символов.
-                    </p>
-                  )}
-                </div>
+          <header
+            className={theme ? style.header + ' ' + style.red : style.header}
+          >
+            <div className={style.header__title}>
+              <h2 className={style.header__title_name}>
+                Новый колонист, Добро пожаловать на планету &ldquo;
+                {theme ? 'Адская земля' : 'Райская земля'}&ldquo;! <br /> Для
+                {theme
+                  ? ' "комфортного проживания" '
+                  : ' комфортного проживания '}
+                на данной планете мы рекомендуем продумать ваши задачи, если их
+                нет в списке текущих задач.
+              </h2>
+              <div className={style.header__title_search}>
+                <h3 className={style.search__title}>
+                  Название задачи или поиск по названию
+                </h3>
+                <input
+                  className={
+                    valueError
+                      ? style.search__input + ' ' + style.search__input_error
+                      : style.search__input
+                  }
+                  type="text"
+                  value={value}
+                  onChange={(e) => {
+                    getTitle(e);
+                    valueDebounce(e);
+                  }}
+                ></input>
+                {valueError && (
+                  <p className={style.search__error}>
+                    Данные введены не корректно! Название должно быть и состоять
+                    не менее чем из 2 символов.
+                  </p>
+                )}
               </div>
-              <div className={style.header__content}>
-                {!openDescriptionValue ? (
-                  <div
-                    className={
-                      (style.header__openDescrition,
-                      style.example,
-                      height ? style.height : null)
-                    }
-                  >
-                    <a
-                      href="#"
-                      className={style.header__openDescrition_content}
-                      onClick={openDescription}
-                    >
-                      Для описания вашей задачи смелее нажимайте!
-                    </a>
-                    <div className={style.header__openDescrition_outer}></div>
-                  </div>
-                ) : (
-                  <div className={style.header__description}>
-                    <h3 className="header__description-name">
-                      Описание задачи
-                    </h3>
-                    <textarea
-                      className="header__description-text"
-                      type="text"
-                      value={valueArea}
-                      onChange={getDiscription}
-                    ></textarea>
-                  </div>
-                )}
-                {!openTimerValue ? (
-                  <div className={(style.header__openTime, style.example)}>
-                    <a
-                      href="#"
-                      className={style.header__openTime_content}
-                      onClick={openTimer}
-                    >
-                      Для установки времени выполнения жмите!
-                    </a>
-                    <div className={style.header__openTime_outer}></div>
-                  </div>
-                ) : (
-                  <div className={style.header__time}>
-                    <h3 className="header__time_title">Срок выполнения</h3>
-                    <div className={style.header__time_date}>
-                      <div className="header__time_years">
-                        <h4 className="years__title">Годы</h4>
-                        <input
-                          className="years__number"
-                          type="number"
-                          min="0"
-                          value={years__number}
-                          onChange={setTimeTask}
-                          onFocus={(e) => (e.target.value = '')}
-                        />
-                      </div>
-                      <div className="header__time_months">
-                        <h4 className="months__title">Месяцы</h4>
-                        <input
-                          className="months__number"
-                          type="number"
-                          min="0"
-                          value={months__number}
-                          onChange={setTimeTask}
-                          onFocus={(e) => (e.target.value = '')}
-                        />
-                      </div>
-                      <div className="header__time_days">
-                        <h4 className="days__title">Дни</h4>
-                        <input
-                          className="days__number"
-                          type="number"
-                          min="0"
-                          value={days__number}
-                          onChange={setTimeTask}
-                          onFocus={(e) => (e.target.value = '')}
-                        />
-                      </div>
-                      <div className="header__time_hours">
-                        <h4 className="hours__title">Часы</h4>
-                        <input
-                          className="hours__number"
-                          type="number"
-                          min="0"
-                          value={hours__number}
-                          onChange={setTimeTask}
-                          onFocus={(e) => (e.target.value = '')}
-                        />
-                      </div>
-                      <div className="header__time_minutes">
-                        <h4 className="minutes__title">Минуты</h4>
-                        <input
-                          className="minutes__number"
-                          type="number"
-                          min="0"
-                          value={minutes__number}
-                          onChange={setTimeTask}
-                          onFocus={(e) => (e.target.value = '')}
-                        />
-                      </div>
-                      <div className="header__time_seconds">
-                        <h4 className="seconds__title">Секунды</h4>
-                        <input
-                          className="seconds__number"
-                          type="number"
-                          min="0"
-                          value={seconds__number}
-                          onChange={setTimeTask}
-                          onFocus={(e) => (e.target.value = '')}
-                        />
-                      </div>
-                    </div>
-                  </div>
-                )}
-                <div className={height ? style.height__create : null}></div>
-                <div className={style.header__create}>
+            </div>
+            <div className={style.header__content}>
+              {!openDescriptionValue ? (
+                <div
+                  className={
+                    (style.header__openDescrition,
+                    style.example,
+                    height ? style.height : null)
+                  }
+                >
                   <a
                     href="#"
-                    className={style.header__create_task}
-                    onClick={getValueInputs}
+                    className={style.header__openDescrition_content}
+                    onClick={openDescription}
                   >
-                    Создать новую задачу
+                    Для описания вашей задачи смелее нажимайте!
                   </a>
-                  <div className={style.header__create_outer}></div>
+                  <div className={style.header__openDescrition_outer}></div>
                 </div>
+              ) : (
+                <div className={style.header__description}>
+                  <h3 className={style.header__description_name}>
+                    Описание задачи
+                  </h3>
+                  <textarea
+                    className={style.header__description_text}
+                    type="text"
+                    value={valueArea}
+                    onChange={getDiscription}
+                  ></textarea>
+                </div>
+              )}
+              {!openTimerValue ? (
+                <div className={(style.header__openTime, style.example)}>
+                  <a
+                    href="#"
+                    className={style.header__openTime_content}
+                    onClick={openTimer}
+                  >
+                    Для установки времени выполнения жмите!
+                  </a>
+                  <div className={style.header__openTime_outer}></div>
+                </div>
+              ) : (
+                <div className={style.header__time}>
+                  <h3 className={style.header__time_title}>Срок выполнения</h3>
+                  <div className={style.header__time_date}>
+                    <div className={style.header__time_years}>
+                      <h4 className={style.years__title}>Годы</h4>
+                      <input
+                        className="years__number"
+                        type="number"
+                        min="0"
+                        value={years__number}
+                        onChange={setTimeTask}
+                        onFocus={(e) => (e.target.value = '')}
+                      />
+                    </div>
+                    <div className={style.header__time_months}>
+                      <h4 className={style.months__title}>Месяцы</h4>
+                      <input
+                        className="months__number"
+                        type="number"
+                        min="0"
+                        value={months__number}
+                        onChange={setTimeTask}
+                        onFocus={(e) => (e.target.value = '')}
+                      />
+                    </div>
+                    <div className={style.header__time_days}>
+                      <h4 className={style.days__title}>Дни</h4>
+                      <input
+                        className="days__number"
+                        type="number"
+                        min="0"
+                        value={days__number}
+                        onChange={setTimeTask}
+                        onFocus={(e) => (e.target.value = '')}
+                      />
+                    </div>
+                    <div className={style.header__time_hours}>
+                      <h4 className={style.hours__title}>Часы</h4>
+                      <input
+                        className="hours__number"
+                        type="number"
+                        min="0"
+                        value={hours__number}
+                        onChange={setTimeTask}
+                        onFocus={(e) => (e.target.value = '')}
+                      />
+                    </div>
+                    <div className={style.header__time_minutes}>
+                      <h4 className={style.minutes__title}>Минуты</h4>
+                      <input
+                        className="minutes__number"
+                        type="number"
+                        min="0"
+                        value={minutes__number}
+                        onChange={setTimeTask}
+                        onFocus={(e) => (e.target.value = '')}
+                      />
+                    </div>
+                    <div className={style.header__time_seconds}>
+                      <h4 className={style.seconds__title}>Секунды</h4>
+                      <input
+                        className="seconds__number"
+                        type="number"
+                        min="0"
+                        value={seconds__number}
+                        onChange={setTimeTask}
+                        onFocus={(e) => (e.target.value = '')}
+                      />
+                    </div>
+                  </div>
+                </div>
+              )}
+              <div className={height ? style.height__create : null}></div>
+              <div className={style.header__create}>
+                <a
+                  href="#"
+                  className={style.header__create_task}
+                  onClick={getValueInputs}
+                >
+                  Создать новую задачу
+                </a>
+                <div className={style.header__create_outer}></div>
               </div>
-            </header>
-          )
+            </div>
+          </header>
         )}
       </ContextValue.Consumer>
     );
   }
 }
-
-export default HeaderSearch;

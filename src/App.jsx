@@ -3,12 +3,7 @@ import React, { Component } from 'react';
 import style from './App.module.css';
 import HeaderSearch from './components/header/HeaderSearch';
 import SectionItems from './components/body/SectionItems';
-import {
-  getOneItemElement,
-  generateWords,
-  // countdownTimer,
-  // calculateTimeLeft,
-} from './components/function';
+import { getOneItemElement, generateWords } from './components/function';
 import Footer from './components/footer/Footer';
 import ContextComponent from './components/body/ContextComponent';
 import background from './images/background.jpg';
@@ -60,10 +55,7 @@ export default class App extends Component {
       name: '',
       word: '',
       theme: '',
-      // filter: null,
-      // time: calculateTimeLeft(),
     };
-    // this.id;
     this.createArrayElements = this.createArrayElements.bind(this);
     this.editedItemElement = this.editedItemElement.bind(this);
     this.deleteItemElement = this.deleteItemElement.bind(this);
@@ -78,10 +70,8 @@ export default class App extends Component {
   }
   createArrayElements(objValue) {
     let obj = getOneItemElement(objValue);
-    console.log(obj, objValue);
     this.setState(({ arrayElements }) => {
       const newArr = [...arrayElements, obj];
-
       return {
         arrayElements: newArr,
       };
@@ -122,14 +112,11 @@ export default class App extends Component {
         ...obj,
         [text]: !obj[text],
       };
-      console.log(newObj, text, !obj[text]);
       let newArr = [
         ...arrayElements.slice(0, indexElement),
         newObj,
         ...arrayElements.slice(indexElement + 1, arrayElements.length),
       ];
-      console.log(newArr, indexElement);
-
       return {
         arrayElements: newArr,
       };
@@ -144,19 +131,17 @@ export default class App extends Component {
     let newArr = arr.filter((item) =>
       text === 'active' ? !item['archive'] && !item['completed'] : item[text],
     );
-
     return !text ? arr : newArr;
   }
   changeValueWord(text) {
     this.setState({
-      word: text.target.value,
+      word: text ? text.target.value : false,
     });
   }
   searchByTitle(arr, text) {
     if (!text) {
       return arr;
     }
-
     return arr.filter((item) => {
       return item.title.toLowerCase().indexOf(text.toLowerCase()) > -1;
     });
@@ -168,7 +153,6 @@ export default class App extends Component {
   }
   componentDidMount() {
     let arrayStorage = JSON.parse(localStorage.getItem('arr'));
-    // console.log('mount');
     this.setState({
       arrayElements:
         arrayStorage.length === 0 ? this.state.arrayElements : arrayStorage,
@@ -176,11 +160,9 @@ export default class App extends Component {
   }
   componentDidUpdate() {
     localStorage.setItem('arr', JSON.stringify(this.state.arrayElements));
-    // console.log('update');
   }
 
   render() {
-    // console.log(this.state.arrayElements);
     let { arrayElements, name, word, theme } = this.state;
     let {
       createArrayElements,
@@ -193,26 +175,11 @@ export default class App extends Component {
       changeValueWord,
       changeThemeAllContent,
     } = this;
-
     const allSearchArrayElements = searchByTitle(arrayElements, word);
     const allArrayElements = showActiveCompletedArchiveElements(
       name,
       allSearchArrayElements,
     );
-    // console.log(allArrayElements, allSearchArrayElements);
-    // const timerComponents = Object.keys(time).map((interval) => {
-    //   if (!time[interval]) {
-    //     return;
-    //   }
-
-    //   return (
-    //     <span key={Math.random()}>
-    //       {time[interval]} {interval}{' '}
-    //     </span>
-    //   );
-    // });
-    // console.log(this.id, time, timerComponents);
-    console.log(theme);
     return (
       <ContextValue.Provider
         value={{
@@ -242,16 +209,6 @@ export default class App extends Component {
                 addArchiveItemElementAndMarkAsCompletedItemElement
               }
             />
-            {/* {timerComponents} */}
-            {/* <div className={style.timer}>
-          <div className={style.timer__items}>
-            <div className={(style.timer__item, style.timer__days)}>00</div>
-            <div className={(style.timer__item, style.timer__hours)}>00</div>
-            <div className={(style.timer__item, style.timer__minutes)}>00</div>
-            <div className={(style.timer__item, style.timer__seconds)}>00</div>
-          </div>
-        </div> */}
-
             <Footer addNameFilter={addNameFilter} />
           </div>
         </>

@@ -17,7 +17,9 @@
 
   padding: 30px;
   margin: 0 0 20px 0;
+
   color: white;
+
   transition: all 5s ease;
   z-index: 10;
 }
@@ -32,7 +34,6 @@
 
   transform: translate(-50%, -60%);
 }
-
 .red {
   color: red;
 }

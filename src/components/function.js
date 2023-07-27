@@ -52,7 +52,6 @@ function getSecondsDate(years, months, days, hours, minutes, seconds) {
     seconds
   );
 }
-
 export function generateWords(length = 10) {
   return (
     [...Array(length)]
@@ -83,27 +82,22 @@ export function getOneItemElement({
     completed: false,
   };
 }
-
 export function calculateTimeLeft(arr) {
   const difference =
     +new Date(arr[0], arr[1], arr[2], arr[3], arr[4], arr[5]) - +new Date();
   let timeLeft = {};
-
   if (difference > 0) {
     timeLeft = {
       years: Math.floor(difference / (1000 * 60 * 60 * 24 * 7 * 4 * 12)),
       months: Math.floor((difference / (1000 * 60 * 60 * 24 * 7 * 4)) % 12),
-      // weeks: Math.floor((difference / (1000 * 60 * 60 * 24 * 7)) % 4),
       days: Math.floor((difference / (1000 * 60 * 60 * 24)) % 7),
       hours: Math.floor((difference / (1000 * 60 * 60)) % 24),
       minutes: Math.floor((difference / 1000 / 60) % 60),
       seconds: Math.floor((difference / 1000) % 60),
     };
   }
-
   return timeLeft;
 }
-
 export function debounce(callback, delay) {
   let timer;
   return function (...args) {

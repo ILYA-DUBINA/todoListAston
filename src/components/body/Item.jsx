@@ -1,12 +1,9 @@
-/* eslint-disable prettier/prettier */
 import { Component } from 'react';
 
 import { calculateTimeLeft } from '../function';
 import { ContextValue } from '../../App';
 
 import style from './Item.module.css';
-
-// import { MyContext } from '../../App';
 
 export default class Item extends Component {
   constructor(props) {
@@ -18,7 +15,6 @@ export default class Item extends Component {
       timer: {},
       count: 0,
     };
-    // this.MyContext = MyContext;
     this.id;
     this.openItemText = this.openItemText.bind(this);
     this.saveItemText = this.saveItemText.bind(this);
@@ -28,13 +24,11 @@ export default class Item extends Component {
     this.setArchiveItem = this.setArchiveItem.bind(this);
     this.setCompletedItem = this.setCompletedItem.bind(this);
   }
-
   openItemText() {
     this.setState({
       open: true,
     });
   }
-
   saveItemText() {
     if (this.state.value < 2) {
       this.props.deleteItemElement(this.props.obj.id);
@@ -44,7 +38,6 @@ export default class Item extends Component {
         this.state.value,
         this.state.valueArea,
       );
-
       this.setState({
         open: false,
       });
@@ -58,12 +51,6 @@ export default class Item extends Component {
       this.props.obj.id,
       'archive',
     );
-    // this.id = setTimeout(() => {
-    //   let count = 0;
-    //   this.setState({
-    //     count: count++,
-    //   });
-    // }, 1000);
   }
   setCompletedItem() {
     this.props.addArchiveItemElementAndMarkAsCompletedItemElement(
@@ -71,7 +58,6 @@ export default class Item extends Component {
       'completed',
     );
   }
-
   getTitle(e) {
     this.setState({
       value: e.target.value,
@@ -82,7 +68,6 @@ export default class Item extends Component {
       valueArea: e.target.value,
     });
   }
-
   componentDidMount() {
     this.setState({
       timer:
@@ -101,32 +86,12 @@ export default class Item extends Component {
         count++;
       }, 1000);
       this.props.obj.archive && clearTimeout(this.id);
-      // console.log(this.id, this.state.count, count);
     }
   }
   componentWillUnmount() {
     clearTimeout(this.id);
   }
-
-  // componentDidMount() {
-  //   let value = this.context;
-  //   console.log(value);
-  //   /* perform a side-effect at mount using the value of MyContext */
-  // }
-  // componentDidUpdate() {
-  //   let value = this.context;
-  //   console.log(value);
-  //   /* ... */
-  // }
-  // componentWillUnmount() {
-  //   let value = this.context;
-  //   console.log(value);
-  //   /* ... */
-  // }
-
   render() {
-    // let v = this.context;
-
     let { title, description, archive, completed } = this.props.obj;
     let { open, value, valueArea, timer } = this.state;
     let {
@@ -138,19 +103,16 @@ export default class Item extends Component {
       setArchiveItem,
       setCompletedItem,
     } = this;
-
     const timerComponents = Object.keys(timer).map((interval) => {
       if (!timer[interval]) {
         return;
       }
-
       return (
         <span key={Math.random()}>
           {timer[interval]} {' ' + interval + ' '}
         </span>
       );
     });
-    // console.log(time, timer, timerComponents);
     return (
       <ContextValue.Consumer>
         {({ theme }) => (
@@ -173,13 +135,11 @@ export default class Item extends Component {
                     transform="matrix(1, 0, 0, 1, 0, 0)rotate(0)"
                   >
                     <g id="SVGRepo_bgCarrier" strokeWidth="0" />
-
                     <g
                       id="SVGRepo_tracerCarrier"
                       strokeLinecap="round"
                       strokeLinejoin="round"
                     />
-
                     <g id="SVGRepo_iconCarrier">
                       <path
                         d="M866.133333 258.133333L362.666667 761.6l-204.8-204.8L98.133333 618.666667 362.666667 881.066667l563.2-563.2z"
@@ -326,4 +286,3 @@ export default class Item extends Component {
     );
   }
 }
-// Item.contextType = MyContext;

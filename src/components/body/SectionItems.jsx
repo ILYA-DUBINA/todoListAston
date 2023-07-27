@@ -16,7 +16,7 @@ export default class SectionItems extends Component {
     } = this.props;
     return (
       <section className={style.section__items}>
-        <ul className="section__items-content">
+        <ul className={style.section__items_content}>
           <SectionMapItems
             arrayElements={arrayElements}
             editedItemElement={editedItemElement}

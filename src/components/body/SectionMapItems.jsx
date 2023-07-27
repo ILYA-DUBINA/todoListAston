@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 
 import Item from './Item';
 
-class SectionMapItems extends Component {
+export default class SectionMapItems extends Component {
   constructor(props) {
     super(props);
   }
@@ -31,5 +31,3 @@ class SectionMapItems extends Component {
     );
   }
 }
-
-export default SectionMapItems;
