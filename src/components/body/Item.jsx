@@ -241,9 +241,6 @@ export default class Item extends Component {
                       >
                         отметить как выполненную
                       </button>
-                      <button className={style.content__item_time}>
-                        поставить срок выполнения
-                      </button>
                     </div>
                   ) : (
                     <button

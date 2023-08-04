@@ -133,7 +133,9 @@
 .content__item_buttons {
   display: flex;
   flex-direction: column;
-  justify-content: center;
+  justify-content: space-between;
+
+  padding: 20px 0 20px 0;
 }
 .content__item_buttons button:hover {
   color: white;
