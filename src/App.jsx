@@ -29,8 +29,6 @@ export default class App extends Component {
         this.getOneItemElement({
           title: 'Постройка дома',
           description: generateWords(20),
-          years: 0,
-          months: 0,
           days: 0,
           hours: 0,
           minutes: 0,
@@ -39,8 +37,6 @@ export default class App extends Component {
         this.getOneItemElement({
           title: 'Выбор профессии и/или переквалификация',
           description: generateWords(15),
-          years: 0,
-          months: 0,
           days: 0,
           hours: 0,
           minutes: 0,
@@ -49,8 +45,6 @@ export default class App extends Component {
         this.getOneItemElement({
           title: 'Создание семьи',
           description: generateWords(),
-          years: 0,
-          months: 0,
           days: 0,
           hours: 0,
           minutes: 0,
