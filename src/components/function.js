@@ -29,7 +29,7 @@ function getRandomWord(firstLetterToUppercase = false) {
 function getRandomNumber(min, max) {
   return Math.floor(Math.random() * (max - min) + min);
 }
-function getArrayDate(seconds) {
+export function getArrayDate(seconds) {
   let secondsToday = Math.floor(new Date().getTime() / 1000);
   let t = new Date(Date.UTC(1970, 0, 1));
   t.setUTCSeconds(seconds + secondsToday);
@@ -42,15 +42,8 @@ function getArrayDate(seconds) {
     t.getSeconds(),
   ];
 }
-function getSecondsDate(years, months, days, hours, minutes, seconds) {
-  return (
-    years * 31536000 +
-    months * 2592000 +
-    days * 86400 +
-    hours * 3600 +
-    minutes * 60 +
-    seconds
-  );
+export function getSecondsDate(days, hours, minutes, seconds) {
+  return days * 86400 + hours * 3600 + minutes * 60 + seconds * 1;
 }
 export function generateWords(length = 10) {
   return (
@@ -63,15 +56,13 @@ export function generateWords(length = 10) {
 export function getOneItemElement({
   title,
   description,
-  years,
-  months,
   days,
   hours,
   minutes,
   seconds,
 }) {
   let numberRandom = getRandomNumber(0, 1000) + getRandomNumber(1000, 5000);
-  let sumSec = getSecondsDate(years, months, days, hours, minutes, seconds);
+  let sumSec = getSecondsDate(days, hours, minutes, seconds);
   let resultArrayDate = getArrayDate(sumSec);
   return {
     id: numberRandom,
@@ -88,8 +79,6 @@ export function calculateTimeLeft(arr) {
   let timeLeft = {};
   if (difference > 0) {
     timeLeft = {
-      years: Math.floor(difference / (1000 * 60 * 60 * 24 * 7 * 4 * 12)),
-      months: Math.floor((difference / (1000 * 60 * 60 * 24 * 7 * 4)) % 12),
       days: Math.floor((difference / (1000 * 60 * 60 * 24)) % 7),
       hours: Math.floor((difference / (1000 * 60 * 60)) % 24),
       minutes: Math.floor((difference / 1000 / 60) % 60),

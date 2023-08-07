@@ -3,7 +3,12 @@ import React, { Component } from 'react';
 import style from './App.module.css';
 import HeaderSearch from './components/header/HeaderSearch';
 import SectionItems from './components/body/SectionItems';
-import { getOneItemElement, generateWords } from './components/function';
+import {
+  getOneItemElement,
+  generateWords,
+  getSecondsDate,
+  getArrayDate,
+} from './components/function';
 import Footer from './components/footer/Footer';
 import ContextComponent from './components/body/ContextComponent';
 import background from './images/background.jpg';
@@ -77,14 +82,24 @@ export default class App extends Component {
       };
     });
   }
-  editedItemElement(id, title, description) {
+  editedItemElement(objEdited) {
     this.setState(({ arrayElements }) => {
-      let indexElement = arrayElements.findIndex((item) => item.id === id);
+      let indexElement = arrayElements.findIndex(
+        (item) => item.id === objEdited.id,
+      );
       let obj = arrayElements[indexElement];
+      let arrayData = getSecondsDate(
+        objEdited.days__number,
+        objEdited.hours__number,
+        objEdited.minutes__number,
+        objEdited.seconds__number,
+      );
+      let arrayDataOther = getArrayDate(arrayData);
       let newObj = {
         ...obj,
-        title: title,
-        description: description,
+        title: objEdited.value,
+        description: objEdited.valueArea,
+        time: arrayDataOther,
       };
       let newArr = [
         ...arrayElements.slice(0, indexElement),

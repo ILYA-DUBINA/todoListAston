@@ -14,15 +14,18 @@ export default class Item extends Component {
       open: false,
       timer: {},
       count: 0,
+      item__days: '',
+      item__hours: '',
+      item__minutes: '',
+      item__seconds: '',
     };
     this.id;
     this.openItemText = this.openItemText.bind(this);
     this.saveItemText = this.saveItemText.bind(this);
-    this.getTitle = this.getTitle.bind(this);
-    this.getDiscription = this.getDiscription.bind(this);
     this.deleteItem = this.deleteItem.bind(this);
     this.setArchiveItem = this.setArchiveItem.bind(this);
     this.setCompletedItem = this.setCompletedItem.bind(this);
+    this.setTimeTaskItem = this.setTimeTaskItem.bind(this);
   }
   openItemText() {
     this.setState({
@@ -33,11 +36,15 @@ export default class Item extends Component {
     if (this.state.value < 2) {
       this.props.deleteItemElement(this.props.obj.id);
     } else {
-      this.props.editedItemElement(
-        this.props.obj.id,
-        this.state.value,
-        this.state.valueArea,
-      );
+      this.props.editedItemElement({
+        id: this.props.obj.id,
+        value: this.state.value,
+        valueArea: this.state.valueArea,
+        days__number: this.state.item__days,
+        hours__number: this.state.item__hours,
+        minutes__number: this.state.item__minutes,
+        seconds__number: this.state.item__seconds,
+      });
       this.setState({
         open: false,
       });
@@ -58,14 +65,9 @@ export default class Item extends Component {
       'completed',
     );
   }
-  getTitle(e) {
+  setTimeTaskItem(e) {
     this.setState({
-      value: e.target.value,
-    });
-  }
-  getDiscription(e) {
-    this.setState({
-      valueArea: e.target.value,
+      [e.target.className]: e.target.value,
     });
   }
   componentDidMount() {
@@ -93,23 +95,35 @@ export default class Item extends Component {
   }
   render() {
     let { title, description, archive, completed } = this.props.obj;
-    let { open, value, valueArea, timer } = this.state;
+    let {
+      open,
+      value,
+      valueArea,
+      timer,
+      item__days,
+      item__hours,
+      item__minutes,
+      item__seconds,
+    } = this.state;
     let {
       openItemText,
       saveItemText,
-      getTitle,
-      getDiscription,
+      // getTitle,
+      // getDiscription,
       deleteItem,
       setArchiveItem,
       setCompletedItem,
+      setTimeTaskItem,
     } = this;
     const timerComponents = Object.keys(timer).map((interval) => {
       if (!timer[interval]) {
-        return;
+        return '00' + ' ' + interval + ' ';
       }
       return (
         <span key={Math.random()}>
-          {timer[interval]} {' ' + interval + ' '}
+          {timer[interval] < 10
+            ? '0' + timer[interval] + ' ' + interval + ' '
+            : timer[interval] + ' ' + interval + ' '}
         </span>
       );
     });
@@ -193,14 +207,67 @@ export default class Item extends Component {
                       : style.content__item
                   }
                 >
+                  {!open ? null : (
+                    <div className={style.item__time}>
+                      <h3 className={style.item__time_title}>
+                        Срок выполнения
+                      </h3>
+                      <div className={style.item__time_date}>
+                        <div className={style.item__time_days}>
+                          <h4 className={style.days__title}>Дни</h4>
+                          <input
+                            className="item__days"
+                            type="number"
+                            min="0"
+                            value={item__days}
+                            onChange={setTimeTaskItem}
+                            onFocus={(e) => (e.target.value = '')}
+                          />
+                        </div>
+                        <div className={style.item__time_hours}>
+                          <h4 className={style.hours__title}>Часы</h4>
+                          <input
+                            className="item__hours"
+                            type="number"
+                            min="0"
+                            value={item__hours}
+                            onChange={setTimeTaskItem}
+                            onFocus={(e) => (e.target.value = '')}
+                          />
+                        </div>
+                        <div className={style.item__time_minutes}>
+                          <h4 className={style.minutes__title}>Минуты</h4>
+                          <input
+                            className="item__minutes"
+                            type="number"
+                            min="0"
+                            value={item__minutes}
+                            onChange={setTimeTaskItem}
+                            onFocus={(e) => (e.target.value = '')}
+                          />
+                        </div>
+                        <div className={style.item__time_seconds}>
+                          <h4 className={style.seconds__title}>Секунды</h4>
+                          <input
+                            className="item__seconds"
+                            type="number"
+                            min="0"
+                            value={item__seconds}
+                            onChange={setTimeTaskItem}
+                            onFocus={(e) => (e.target.value = '')}
+                          />
+                        </div>
+                      </div>
+                    </div>
+                  )}
                   {!open ? (
                     <h2 className={style.content__item_title}>{title}</h2>
                   ) : (
                     <textarea
-                      className={style.header__title_search}
+                      className="value"
                       type="text"
                       value={value}
-                      onChange={getTitle}
+                      onChange={setTimeTaskItem}
                       placeholder="название задачи"
                     ></textarea>
                   )}
@@ -208,10 +275,10 @@ export default class Item extends Component {
                     <p className={style.content__item_text}>{description}</p>
                   ) : (
                     <textarea
-                      className={style.header__discription_text}
+                      className="valueArea"
                       type="text"
                       value={valueArea}
-                      onChange={getDiscription}
+                      onChange={setTimeTaskItem}
                       placeholder="описание задачи"
                     ></textarea>
                   )}

@@ -187,3 +187,43 @@
 .red button {
   color: red;
 }
+.item__time input {
+  max-width: 50px;
+}
+.item__time h3,
+.item__time h4 {
+  margin: 0 0 0 0;
+  padding: 0 0 0 0;
+}
+.item__time > div {
+  display: flex;
+
+  padding: 5px;
+}
+.item__time > div > div {
+  margin: 0 5px 0 0;
+}
+.item__title_search {
+  max-width: 200px;
+
+  margin: 0 0 0 5px;
+}
+.item__discription_text {
+  margin: 0 0 0 5px;
+}
+.content__item textarea {
+  margin: 0 0 0 5px;
+}
+.content__save:hover {
+  color: white;
+
+  background: red;
+
+  transform: scale(1.1);
+  transition: all 1s ease;
+}
+.content__save:hover::after {
+  border-right: 10px solid red;
+
+  transition: all 1s ease;
+}

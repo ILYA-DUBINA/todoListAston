@@ -14,8 +14,6 @@ export default class HeaderSearch extends Component {
       valueArea: '',
       openDescriptionValue: false,
       openTimerValue: false,
-      years__number: 0,
-      months__number: 0,
       days__number: 0,
       hours__number: 0,
       minutes__number: 0,
@@ -50,8 +48,6 @@ export default class HeaderSearch extends Component {
       this.props.createArrayElements({
         title: this.state.value,
         description: this.state.valueArea,
-        years: this.state.years__number,
-        months: this.state.months__number,
         days: this.state.days__number,
         hours: this.state.hours__number,
         minutes: this.state.minutes__number,
@@ -62,8 +58,6 @@ export default class HeaderSearch extends Component {
         valueArea: '',
         openDescriptionValue: false,
         openTimerValue: false,
-        years__number: 0,
-        months__number: 0,
         weeks__number: 0,
         days__number: 0,
         hours__number: 0,
@@ -109,8 +103,6 @@ export default class HeaderSearch extends Component {
       valueArea,
       openDescriptionValue,
       openTimerValue,
-      years__number,
-      months__number,
       days__number,
       hours__number,
       minutes__number,
@@ -205,28 +197,6 @@ export default class HeaderSearch extends Component {
                 <div className={style.header__time}>
                   <h3 className={style.header__time_title}>Срок выполнения</h3>
                   <div className={style.header__time_date}>
-                    <div className={style.header__time_years}>
-                      <h4 className={style.years__title}>Годы</h4>
-                      <input
-                        className="years__number"
-                        type="number"
-                        min="0"
-                        value={years__number}
-                        onChange={setTimeTask}
-                        onFocus={(e) => (e.target.value = '')}
-                      />
-                    </div>
-                    <div className={style.header__time_months}>
-                      <h4 className={style.months__title}>Месяцы</h4>
-                      <input
-                        className="months__number"
-                        type="number"
-                        min="0"
-                        value={months__number}
-                        onChange={setTimeTask}
-                        onFocus={(e) => (e.target.value = '')}
-                      />
-                    </div>
                     <div className={style.header__time_days}>
                       <h4 className={style.days__title}>Дни</h4>
                       <input
