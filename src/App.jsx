@@ -188,8 +188,10 @@ export default class App extends Component {
   }
   createArrayElements(objValue) {
     let obj = this.getOneItemElement(objValue);
+
     this.setState(({ arrayElements }) => {
       const newArr = [...arrayElements, obj];
+      console.log(newArr, arrayElements, obj, objValue);
       return {
         arrayElements: newArr,
       };
