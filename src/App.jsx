@@ -5,7 +5,7 @@ import HeaderSearch from './components/header/HeaderSearch';
 import SectionItems from './components/body/SectionItems';
 import {
   // getOneItemElement,
-  // getRandomNumber,
+  getRandomNumber,
   // generateWords,
   getSecondsDate,
   getArrayDate,
@@ -77,11 +77,11 @@ export default class App extends Component {
     // minutes,
     // seconds,
   }) {
-    // let numberRandom = getRandomNumber(0, 1000) + getRandomNumber(1000, 5000);
+    let numberRandom = getRandomNumber(0, 1000) + getRandomNumber(1000, 5000);
     // let sumSec = getSecondsDate(days, hours, minutes, seconds);
     // let resultArrayDate = getArrayDate(sumSec);
     return {
-      // id: numberRandom,
+      id: numberRandom,
       title: title,
       description: description,
       time: [],
