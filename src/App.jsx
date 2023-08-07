@@ -25,30 +25,30 @@ export default class App extends Component {
 
     this.state = {
       arrayElements: [
-        getOneItemElement({
-          title: 'Постройка дома',
-          description: generateWords(20),
-          days: 0,
-          hours: 0,
-          minutes: 0,
-          seconds: 0,
-        }),
-        getOneItemElement({
-          title: 'Выбор профессии и/или переквалификация',
-          description: generateWords(15),
-          days: 0,
-          hours: 0,
-          minutes: 0,
-          seconds: 0,
-        }),
-        getOneItemElement({
-          title: 'Создание семьи',
-          description: generateWords(),
-          days: 0,
-          hours: 0,
-          minutes: 0,
-          seconds: 0,
-        }),
+        // getOneItemElement({
+        //   title: 'Постройка дома',
+        //   description: generateWords(20),
+        //   days: 0,
+        //   hours: 0,
+        //   minutes: 0,
+        //   seconds: 0,
+        // }),
+        // getOneItemElement({
+        //   title: 'Выбор профессии и/или переквалификация',
+        //   description: generateWords(15),
+        //   days: 0,
+        //   hours: 0,
+        //   minutes: 0,
+        //   seconds: 0,
+        // }),
+        // getOneItemElement({
+        //   title: 'Создание семьи',
+        //   description: generateWords(),
+        //   days: 0,
+        //   hours: 0,
+        //   minutes: 0,
+        //   seconds: 0,
+        // }),
       ],
       storageUnplag: false,
       name: '',
@@ -71,6 +71,7 @@ export default class App extends Component {
     let obj = getOneItemElement(objValue);
     this.setState(({ arrayElements }) => {
       const newArr = [...arrayElements, obj];
+      // localStorage.setItem('arr', JSON.stringify(newArr));
       return {
         arrayElements: newArr,
       };
@@ -161,11 +162,36 @@ export default class App extends Component {
     });
   }
   componentDidMount() {
-    // let arrayStorage = JSON.parse(localStorage.getItem('arr'));
-    // this.setState({
-    //   arrayElements:
-    //     arrayStorage?.length === 0 ? this.state.arrayElements : arrayStorage,
-    // });
+    let array = [
+      getOneItemElement({
+        title: 'Постройка дома',
+        description: generateWords(20),
+        days: 0,
+        hours: 0,
+        minutes: 0,
+        seconds: 0,
+      }),
+      getOneItemElement({
+        title: 'Выбор профессии и/или переквалификация',
+        description: generateWords(15),
+        days: 0,
+        hours: 0,
+        minutes: 0,
+        seconds: 0,
+      }),
+      getOneItemElement({
+        title: 'Создание семьи',
+        description: generateWords(),
+        days: 0,
+        hours: 0,
+        minutes: 0,
+        seconds: 0,
+      }),
+    ];
+    let arrayStorage = JSON.parse(localStorage.getItem('arr'));
+    this.setState({
+      arrayElements: arrayStorage?.length === 0 ? array : arrayStorage,
+    });
   }
   componentDidUpdate() {
     localStorage.setItem('arr', JSON.stringify(this.state.arrayElements));
