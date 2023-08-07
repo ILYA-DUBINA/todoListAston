@@ -84,7 +84,7 @@ export default class App extends Component {
   }
   editedItemElement(objEdited) {
     this.setState(({ arrayElements }) => {
-      let indexElement = arrayElements.findIndex(
+      let indexElement = arrayElements?.findIndex(
         (item) => item.id === objEdited.id,
       );
       let obj = arrayElements[indexElement];
@@ -113,7 +113,7 @@ export default class App extends Component {
   }
   deleteItemElement(id) {
     this.setState(({ arrayElements }) => {
-      let newArr = arrayElements.filter((item) => item.id !== id);
+      let newArr = arrayElements?.filter((item) => item.id !== id);
       return {
         arrayElements: newArr,
       };
@@ -121,7 +121,7 @@ export default class App extends Component {
   }
   addArchiveItemElementAndMarkAsCompletedItemElement(id, text) {
     this.setState(({ arrayElements }) => {
-      let indexElement = arrayElements.findIndex((item) => item.id === id);
+      let indexElement = arrayElements?.findIndex((item) => item.id === id);
       let obj = arrayElements[indexElement];
       let newObj = {
         ...obj,
@@ -143,7 +143,7 @@ export default class App extends Component {
     });
   }
   showActiveCompletedArchiveElements(text, arr) {
-    let newArr = arr.filter((item) =>
+    let newArr = arr?.filter((item) =>
       text === 'active' ? !item['archive'] && !item['completed'] : item[text],
     );
     return !text ? arr : newArr;
@@ -157,8 +157,8 @@ export default class App extends Component {
     if (!text) {
       return arr;
     }
-    return arr.filter((item) => {
-      return item.title.toLowerCase().indexOf(text.toLowerCase()) > -1;
+    return arr?.filter((item) => {
+      return item?.title.toLowerCase().indexOf(text.toLowerCase()) > -1;
     });
   }
   changeThemeAllContent() {
