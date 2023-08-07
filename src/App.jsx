@@ -167,13 +167,13 @@ export default class App extends Component {
     });
   }
   componentDidMount() {
-    let arrayStorage = JSON.parse(localStorage.getItem('arr'));
-    this.setState(({ arrayElements }) => {
-      return {
-        arrayElements:
-          arrayStorage?.length === 0 ? arrayElements : arrayStorage,
-      };
-    });
+    // let arrayStorage = JSON.parse(localStorage.getItem('arr'));
+    // this.setState(({ arrayElements }) => {
+    //   return {
+    //     arrayElements:
+    //       arrayStorage?.length === 0 ? arrayElements : arrayStorage,
+    //   };
+    // });
   }
   componentDidUpdate() {
     localStorage.setItem('arr', JSON.stringify(this.state.arrayElements));
