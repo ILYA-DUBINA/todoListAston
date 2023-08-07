@@ -5,7 +5,7 @@ import HeaderSearch from './components/header/HeaderSearch';
 import SectionItems from './components/body/SectionItems';
 import {
   getOneItemElement,
-  // generateWords,
+  generateWords,
   getSecondsDate,
   getArrayDate,
 } from './components/function';
@@ -25,53 +25,30 @@ export default class App extends Component {
 
     this.state = {
       arrayElements: [
-        {
-          id: 1,
-          title: 'title',
-          description: 'description',
-          time: [3, 4, 4, 7],
-          archive: false,
-          completed: false,
-        },
-        {
-          id: 2,
-          title: 'title',
-          description: 'description',
-          time: [3, 4, 4, 7],
-          archive: false,
-          completed: false,
-        },
-
-        // getOneItemElement({
-        //   title: 'Постройка дома',
-        //   description: generateWords(20),
-        //   years: 0,
-        //   months: 0,
-        //   days: 0,
-        //   hours: 0,
-        //   minutes: 0,
-        //   seconds: 0,
-        // }),
-        // getOneItemElement({
-        //   title: 'Выбор профессии и/или переквалификация',
-        //   description: generateWords(15),
-        //   years: 0,
-        //   months: 0,
-        //   days: 0,
-        //   hours: 0,
-        //   minutes: 0,
-        //   seconds: 0,
-        // }),
-        // getOneItemElement({
-        //   title: 'Создание семьи',
-        //   description: generateWords(),
-        //   years: 0,
-        //   months: 0,
-        //   days: 0,
-        //   hours: 0,
-        //   minutes: 0,
-        //   seconds: 0,
-        // }),
+        getOneItemElement({
+          title: 'Постройка дома',
+          description: generateWords(20),
+          days: 0,
+          hours: 0,
+          minutes: 0,
+          seconds: 0,
+        }),
+        getOneItemElement({
+          title: 'Выбор профессии и/или переквалификация',
+          description: generateWords(15),
+          days: 0,
+          hours: 0,
+          minutes: 0,
+          seconds: 0,
+        }),
+        getOneItemElement({
+          title: 'Создание семьи',
+          description: generateWords(),
+          days: 0,
+          hours: 0,
+          minutes: 0,
+          seconds: 0,
+        }),
       ],
       storageUnplag: false,
       name: '',
@@ -184,11 +161,11 @@ export default class App extends Component {
     });
   }
   componentDidMount() {
-    let arrayStorage = JSON.parse(localStorage.getItem('arr'));
-    this.setState({
-      arrayElements:
-        arrayStorage?.length === 0 ? this.state.arrayElements : arrayStorage,
-    });
+    // let arrayStorage = JSON.parse(localStorage.getItem('arr'));
+    // this.setState({
+    //   arrayElements:
+    //     arrayStorage?.length === 0 ? this.state.arrayElements : arrayStorage,
+    // });
   }
   componentDidUpdate() {
     localStorage.setItem('arr', JSON.stringify(this.state.arrayElements));
