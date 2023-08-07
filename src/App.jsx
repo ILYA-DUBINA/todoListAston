@@ -173,15 +173,15 @@ export default class App extends Component {
     this.addArchiveItemElementAndMarkAsCompletedItemElement =
       this.addArchiveItemElementAndMarkAsCompletedItemElement.bind(this);
   }
-  getOneItemElement({ title, description, days, hours, minutes, seconds }) {
+  getOneItemElement({ title, description }) {
     let numberRandom = getRandomNumber(0, 1000) + getRandomNumber(1000, 5000);
-    let sumSec = getSecondsDate(days, hours, minutes, seconds);
-    let resultArrayDate = getArrayDate(sumSec);
+    // let sumSec = getSecondsDate(days, hours, minutes, seconds);
+    // let resultArrayDate = getArrayDate(sumSec);
     return {
       id: numberRandom,
       title: title,
       description: description,
-      time: resultArrayDate,
+      // time: resultArrayDate,
       archive: false,
       completed: false,
     };
