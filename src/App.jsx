@@ -71,7 +71,6 @@ export default class App extends Component {
     let obj = getOneItemElement(objValue);
     this.setState(({ arrayElements }) => {
       const newArr = [...arrayElements, obj];
-      localStorage.setItem('arr', JSON.stringify(newArr));
       return {
         arrayElements: newArr,
       };
@@ -162,8 +161,9 @@ export default class App extends Component {
     });
   }
   componentDidMount() {
-    let arrayStorage =
-      this.state.arrayElements && JSON.parse(localStorage.getItem('arr'));
+    let arrayStorage = JSON.parse(localStorage.getItem('arr'))
+      ? JSON.parse(localStorage.getItem('arr'))
+      : this.state.arrayElements;
 
     this.setState({
       arrayElements: arrayStorage,
