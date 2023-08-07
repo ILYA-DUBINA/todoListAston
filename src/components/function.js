@@ -56,19 +56,20 @@ export function generateWords(length = 10) {
 export function getOneItemElement({
   title,
   description,
-  days,
-  hours,
-  minutes,
-  seconds,
+  // days,
+  // hours,
+  // minutes,
+  // seconds,
 }) {
   let numberRandom = getRandomNumber(0, 1000) + getRandomNumber(1000, 5000);
-  let sumSec = getSecondsDate(days, hours, minutes, seconds);
-  let resultArrayDate = getArrayDate(sumSec);
+  // let sumSec = getSecondsDate(days, hours, minutes, seconds);
+  // let resultArrayDate = getArrayDate(sumSec);
   return {
     id: numberRandom,
     title: title,
     description: description,
-    time: resultArrayDate,
+    time: [],
+    // time: resultArrayDate,
     archive: false,
     completed: false,
   };
