@@ -5,8 +5,8 @@ import HeaderSearch from './components/header/HeaderSearch';
 import SectionItems from './components/body/SectionItems';
 import {
   // getOneItemElement,
-  getRandomNumber,
-  generateWords,
+  // getRandomNumber,
+  // generateWords,
   getSecondsDate,
   getArrayDate,
 } from './components/function';
@@ -28,27 +28,27 @@ export default class App extends Component {
       arrayElements: [
         this.getOneItemElement({
           title: 'Постройка дома',
-          description: generateWords(20),
-          days: 0,
-          hours: 0,
-          minutes: 0,
-          seconds: 0,
+          // description: generateWords(20),
+          // days: 0,
+          // hours: 0,
+          // minutes: 0,
+          // seconds: 0,
         }),
         this.getOneItemElement({
           title: 'Выбор профессии и/или переквалификация',
-          description: generateWords(15),
-          days: 0,
-          hours: 0,
-          minutes: 0,
-          seconds: 0,
+          // description: generateWords(15),
+          // days: 0,
+          // hours: 0,
+          // minutes: 0,
+          // seconds: 0,
         }),
         this.getOneItemElement({
           title: 'Создание семьи',
-          description: generateWords(),
-          days: 0,
-          hours: 0,
-          minutes: 0,
-          seconds: 0,
+          // description: generateWords(),
+          // days: 0,
+          // hours: 0,
+          // minutes: 0,
+          // seconds: 0,
         }),
       ],
       storageUnplag: false,
@@ -77,11 +77,11 @@ export default class App extends Component {
     // minutes,
     // seconds,
   }) {
-    let numberRandom = getRandomNumber(0, 1000) + getRandomNumber(1000, 5000);
+    // let numberRandom = getRandomNumber(0, 1000) + getRandomNumber(1000, 5000);
     // let sumSec = getSecondsDate(days, hours, minutes, seconds);
     // let resultArrayDate = getArrayDate(sumSec);
     return {
-      id: numberRandom,
+      // id: numberRandom,
       title: title,
       description: description,
       time: [],
@@ -185,9 +185,10 @@ export default class App extends Component {
   }
   componentDidMount() {
     let arrayStorage = JSON.parse(localStorage.getItem('arr'));
-    this.setState(() => {
+    this.setState(({ arrayElements }) => {
       return {
-        arrayElements: arrayStorage?.length === 0 ? [] : arrayStorage,
+        arrayElements:
+          arrayStorage?.length === 0 ? arrayElements : arrayStorage,
       };
     });
   }
