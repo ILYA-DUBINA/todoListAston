@@ -27,12 +27,21 @@ export default class App extends Component {
       arrayElements: [
         {
           id: 1,
-          title: 'one',
+          title: 'title',
+          description: 'description',
+          time: [3, 4, 4, 7],
+          archive: false,
+          completed: false,
         },
         {
           id: 2,
-          title: 'one',
+          title: 'title',
+          description: 'description',
+          time: [3, 4, 4, 7],
+          archive: false,
+          completed: false,
         },
+
         // getOneItemElement({
         //   title: 'Постройка дома',
         //   description: generateWords(20),
