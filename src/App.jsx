@@ -4,8 +4,7 @@ import style from './App.module.css';
 import HeaderSearch from './components/header/HeaderSearch';
 import SectionItems from './components/body/SectionItems';
 import {
-  // getOneItemElement,
-  getRandomNumber,
+  getOneItemElement,
   // generateWords,
   getSecondsDate,
   getArrayDate,
@@ -26,30 +25,44 @@ export default class App extends Component {
 
     this.state = {
       arrayElements: [
-        this.getOneItemElement({
-          title: 'Постройка дома',
-          // description: generateWords(20),
-          // days: 0,
-          // hours: 0,
-          // minutes: 0,
-          // seconds: 0,
-        }),
-        this.getOneItemElement({
-          title: 'Выбор профессии и/или переквалификация',
-          // description: generateWords(15),
-          // days: 0,
-          // hours: 0,
-          // minutes: 0,
-          // seconds: 0,
-        }),
-        this.getOneItemElement({
-          title: 'Создание семьи',
-          // description: generateWords(),
-          // days: 0,
-          // hours: 0,
-          // minutes: 0,
-          // seconds: 0,
-        }),
+        {
+          id: 1,
+          title: 'one',
+        },
+        {
+          id: 2,
+          title: 'one',
+        },
+        // getOneItemElement({
+        //   title: 'Постройка дома',
+        //   description: generateWords(20),
+        //   years: 0,
+        //   months: 0,
+        //   days: 0,
+        //   hours: 0,
+        //   minutes: 0,
+        //   seconds: 0,
+        // }),
+        // getOneItemElement({
+        //   title: 'Выбор профессии и/или переквалификация',
+        //   description: generateWords(15),
+        //   years: 0,
+        //   months: 0,
+        //   days: 0,
+        //   hours: 0,
+        //   minutes: 0,
+        //   seconds: 0,
+        // }),
+        // getOneItemElement({
+        //   title: 'Создание семьи',
+        //   description: generateWords(),
+        //   years: 0,
+        //   months: 0,
+        //   days: 0,
+        //   hours: 0,
+        //   minutes: 0,
+        //   seconds: 0,
+        // }),
       ],
       storageUnplag: false,
       name: '',
@@ -63,35 +76,13 @@ export default class App extends Component {
     this.searchByTitle = this.searchByTitle.bind(this);
     this.changeValueWord = this.changeValueWord.bind(this);
     this.changeThemeAllContent = this.changeThemeAllContent.bind(this);
-    this.getOneItemElement = this.getOneItemElement.bind(this);
     this.showActiveCompletedArchiveElements =
       this.showActiveCompletedArchiveElements.bind(this);
     this.addArchiveItemElementAndMarkAsCompletedItemElement =
       this.addArchiveItemElementAndMarkAsCompletedItemElement.bind(this);
   }
-  getOneItemElement({
-    title,
-    description,
-    // days,
-    // hours,
-    // minutes,
-    // seconds,
-  }) {
-    let numberRandom = getRandomNumber(0, 1000) + getRandomNumber(1000, 5000);
-    // let sumSec = getSecondsDate(days, hours, minutes, seconds);
-    // let resultArrayDate = getArrayDate(sumSec);
-    return {
-      id: numberRandom,
-      title: title,
-      description: description,
-      time: [],
-      // time: resultArrayDate,
-      archive: false,
-      completed: false,
-    };
-  }
   createArrayElements(objValue) {
-    let obj = this.getOneItemElement(objValue);
+    let obj = getOneItemElement(objValue);
     this.setState(({ arrayElements }) => {
       const newArr = [...arrayElements, obj];
       return {
@@ -185,11 +176,9 @@ export default class App extends Component {
   }
   componentDidMount() {
     let arrayStorage = JSON.parse(localStorage.getItem('arr'));
-    this.setState(({ arrayElements }) => {
-      return {
-        arrayElements:
-          arrayStorage?.length === 0 ? arrayElements : arrayStorage,
-      };
+    this.setState({
+      arrayElements:
+        arrayStorage?.length === 0 ? this.state.arrayElements : arrayStorage,
     });
   }
   componentDidUpdate() {
