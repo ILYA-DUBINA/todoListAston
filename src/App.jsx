@@ -185,10 +185,9 @@ export default class App extends Component {
   }
   componentDidMount() {
     let arrayStorage = JSON.parse(localStorage.getItem('arr'));
-    this.setState(({ arrayElements }) => {
+    this.setState(() => {
       return {
-        arrayElements:
-          arrayStorage?.length === 0 ? arrayElements : arrayStorage,
+        arrayElements: arrayStorage?.length === 0 ? [] : arrayStorage,
       };
     });
   }
