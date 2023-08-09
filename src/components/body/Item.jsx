@@ -108,8 +108,6 @@ export default class Item extends Component {
     let {
       openItemText,
       saveItemText,
-      // getTitle,
-      // getDiscription,
       deleteItem,
       setArchiveItem,
       setCompletedItem,

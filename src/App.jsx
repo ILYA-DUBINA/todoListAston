@@ -167,7 +167,6 @@ export default class App extends Component {
 
     this.setState({
       arrayElements: arrayStorage,
-      // arrayStorage?.length === 0 ? this.state.arrayElements : arrayStorage,
     });
   }
   componentDidUpdate() {

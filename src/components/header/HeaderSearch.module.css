@@ -23,7 +23,8 @@
   margin: 0 60px;
 }
 .header__time_date input {
-  width: 30px;
+  min-width: 40px;
+  max-width: 40px;
 }
 .search__input {
   max-width: 400px;

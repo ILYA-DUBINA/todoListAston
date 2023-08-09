@@ -188,6 +188,7 @@
   color: red;
 }
 .item__time input {
+  min-width: 50px;
   max-width: 50px;
 }
 .item__time h3,
